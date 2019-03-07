@@ -8,13 +8,37 @@ const styles = {
 };
 
 class App extends Component {
+  state = {
+    color: "black",
+    myStyles: []
+  };
+
+  changeStyle = style => {
+    let stList = [...this.state.myStyles];
+
+    if (stList.includes(styles[style])) {
+      stList = stList.filter(styl => styl !== styles[style]);
+    } else {
+      stList.push(styles[style]);
+    }
+    this.setState({ myStyles: [...stList] });
+  };
+
+  changeColor = color => {
+    this.setState({ color: color });
+  };
+
   render() {
     let styleNames = ["bold", "italic", "underline"];
     let colors = ["yellow", "blue", "red", "black", "purple"];
 
     let stylingBoxes = styleNames.map(style => {
       return (
-        <button style={styles[style]} key={style}>
+        <button
+          onClick={() => this.changeStyle(style)}
+          style={styles[style]}
+          key={style}
+        >
           {style}
         </button>
       );
@@ -23,16 +47,25 @@ class App extends Component {
     let colorBoxes = colors.map(color => {
       return (
         <button
+          onClick={() => this.changeColor(color)}
           style={{ backgroundColor: color, height: 30, width: 30 }}
           key={color}
         />
       );
     });
 
+    const sty = [...this.state.myStyles];
+    console.log({ sty });
     return (
       <div className="App">
         <div className="my-3">{stylingBoxes}</div>
-        <textarea />
+
+        <textarea
+          style={{
+            color: this.state.color,
+            ...sty.reduce((obj, style) => ({ ...obj, ...style }), {})
+          }}
+        />
         <div className="my-3">{colorBoxes}</div>
       </div>
     );
