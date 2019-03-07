@@ -55,7 +55,6 @@ class App extends Component {
     });
 
     const sty = [...this.state.myStyles];
-    console.log({ sty });
     return (
       <div className="App">
         <div className="my-3">{stylingBoxes}</div>
