@@ -36,7 +36,12 @@ class App extends Component {
       return (
         <button
           onClick={() => this.changeStyle(style)}
-          style={styles[style]}
+          style={{
+            ...styles[style],
+            color: this.state.myStyles.includes(styles[style])
+              ? "blue"
+              : "black"
+          }}
           key={style}
         >
           {style}
